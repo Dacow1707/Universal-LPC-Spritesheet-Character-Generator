@@ -27,19 +27,12 @@ namespace Universal.LPC.Spritesheet.Character.Generator
                     _spriteDictionary = new Dictionary<string, List<ISpriteSheet>>();
                     foreach (var categoryDirectory in Directory.EnumerateDirectories(SheetRoot))
                     {
-                        try
-                        {
-                            var category = categoryDirectory.Replace(SheetRoot, string.Empty).Trim(new[] { '/', '\\' });
-                            _spriteDictionary.Add(category, new List<ISpriteSheet>());
+                        var category = categoryDirectory.Replace(SheetRoot, string.Empty).Trim(new[] { '/', '\\' });
+                        _spriteDictionary.Add(category, new List<ISpriteSheet>());
 
-                            var categoryPath = Path.Combine(SheetRoot, category);
-                            _spriteDictionary[category].AddRange(Directory.EnumerateFiles(categoryDirectory, "*.png", SearchOption.AllDirectories)
-                                                                     .Select(file => new SpriteSheet(file.Replace(categoryPath, string.Empty).Trim('\\'), categoryPath, category)));
-                        }
-                        catch (Exception)
-                        {
-                            // todo: figure out why some of the sprites are throwing out of memory exceptions
-                        }
+                        var categoryPath = Path.Combine(SheetRoot, category);
+                        _spriteDictionary[category].AddRange(Directory.EnumerateFiles(categoryDirectory, "*.png", SearchOption.AllDirectories)
+                                                                 .Select(file => new SpriteSheet(file.Replace(categoryPath, string.Empty).Trim('\\'), categoryPath, category)));
                     }
                 }
                 return _spriteDictionary;
@@ -52,6 +45,11 @@ namespace Universal.LPC.Spritesheet.Character.Generator
 
             foreach (var category in SpriteDictionary.Keys)
             {
+                // if category is not 'body' we have a 33% of just skipping to add some variety
+                if (category != "body" && RandomHelper.Random.Next(100) < 33)
+                {
+                    continue;
+                }
                 if (SpriteDictionary[category].Count > 0)
                 {
                     var options = SpriteDictionary[category].Where(c => !c.Tags.Any(t => exclusions.Contains(t, StringComparer.OrdinalIgnoreCase))).ToList();
