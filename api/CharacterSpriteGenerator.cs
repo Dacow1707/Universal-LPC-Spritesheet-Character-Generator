@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpriteResources;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,11 +8,20 @@ using Universal.LPC.Spritesheet.Character.Generator.Interfaces;
 
 namespace Universal.LPC.Spritesheet.Character.Generator
 {
-    public static class CharacterSpriteGenerator
+    public class CharacterSpriteGenerator
     {
-        private static List<ISpriteSheet> _spriteLibrary;
 
-        public static List<ISpriteSheet> SpriteLibrary
+        public IResourceManager ResourceManager { get; set; }
+
+        public CharacterSpriteGenerator(IResourceManager resoureManager)
+        {
+            ResourceManager = resoureManager;
+        }
+
+
+        private List<ISpriteSheet> _spriteLibrary;
+
+        public List<ISpriteSheet> SpriteLibrary
         {
             get
             {
@@ -86,7 +96,7 @@ namespace Universal.LPC.Spritesheet.Character.Generator
             }
         }
 
-        private static Gender GetGender(string fileName)
+        private Gender GetGender(string fileName)
         {
             if (fileName.ToLower().Contains("female") || fileName.ToLower().Contains("woman"))
             {
@@ -100,12 +110,12 @@ namespace Universal.LPC.Spritesheet.Character.Generator
             return Gender.Either;
         }
 
-        private static List<ISpriteSheet> GetSprites(string path, SpriteLayer layer, SearchOption option = SearchOption.AllDirectories, string filterRegex = ".*")
+        private List<ISpriteSheet> GetSprites(string path, SpriteLayer layer, SearchOption option = SearchOption.AllDirectories, string filterRegex = ".*")
         {
-            var root = Path.Combine(GeneratorConstants.SheetRoot, path);
             var sheets = new List<ISpriteSheet>();
 
-            var files = Directory.EnumerateFiles(root, GeneratorConstants.ImageExtension, option);
+            var files = ResourceManager.GetSprites(path, option);
+
             foreach (var file in files)
             {
                 var name = Path.GetFileNameWithoutExtension(file);
@@ -119,12 +129,12 @@ namespace Universal.LPC.Spritesheet.Character.Generator
             return sheets;
         }
 
-        public static bool FilterValid(string file, string filter)
+        public bool FilterValid(string file, string filter)
         {
             return Regex.IsMatch(file, filter);
         }
 
-        public static ICharacterSprite GetRandomCharacterSprite(string[] blacklist, string[] whitelist)
+        public ICharacterSprite GetRandomCharacterSprite()
         {
             var character = new CharacterSprite(RandomHelper.Random.Next(10) > 5 ? Gender.Male : Gender.Female);
 
@@ -134,9 +144,7 @@ namespace Universal.LPC.Spritesheet.Character.Generator
                 {
                     continue; // skip layer
                 }
-                var sprites = GetSprites(layer, character.Gender)
-                                        .Where(s => s.Matches(blacklist, whitelist))  // filter the list based on the tags
-                                        .ToList();
+                var sprites = GetSprites(layer, character.Gender).ToList();
                 if (sprites.Count > 0)
                 {
                     character.AddLayer(sprites[RandomHelper.Random.Next(0, sprites.Count)]);
@@ -146,7 +154,7 @@ namespace Universal.LPC.Spritesheet.Character.Generator
             return character;
         }
 
-        public static IEnumerable<ISpriteSheet> GetSprites(SpriteLayer layer, Gender gender)
+        public IEnumerable<ISpriteSheet> GetSprites(SpriteLayer layer, Gender gender)
         {
             return SpriteLibrary.Where(s => s.SpriteLayer == layer && (s.Gender == gender || s.Gender == Gender.Either));
         }

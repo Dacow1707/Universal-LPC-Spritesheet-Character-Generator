@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SpriteResources;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Universal.LPC.Spritesheet.Character.Generator.Interfaces
@@ -18,5 +19,7 @@ namespace Universal.LPC.Spritesheet.Character.Generator.Interfaces
         Image GetSingleSprite(ICharacterSprite sprite, Animation animation, Orientation orientation, int frame);
 
         Image GetPartialSpriteSheet(ICharacterSprite sprite, Animation animation, Orientation orientation);
+
+        IResourceManager ResourceManager { get; set; }
     }
 }

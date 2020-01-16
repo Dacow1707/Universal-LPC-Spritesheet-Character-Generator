@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpriteResources;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
@@ -15,21 +16,27 @@ namespace ConsoleGenerator
             Directory.CreateDirectory("Chars");
             var sw = new Stopwatch();
             sw.Start();
-            for (int i = 0; i < 200; i++)
-            {
-                // get a random sprite that does NOT have one of the tags
-                var character = CharacterSpriteGenerator.GetRandomCharacterSprite(new string[] { }, new string[] {  });
 
-                DrawEngine.SpriteDrawDefinition.GetSingleSprite(character, Animation.Walk, Orientation.Front, 1)
+            // var resourceManager = new FolderResourceManager();
+            var resourceManager = new EmbeddedResourceManager();
+            var generator = new CharacterSpriteGenerator(resourceManager);
+            var drawEngine = new DefaultSpriteDrawDefinition(resourceManager);
+            for (int i = 0; i < 100; i++)
+            {
+                var character = generator.GetRandomCharacterSprite();
+
+                drawEngine.GetSingleSprite(character, Animation.Walk, Orientation.Front, 1)
                           .Save($"Chars\\{i}.png", ImageFormat.Png);
 
-                //DrawEngine.SpriteDrawDefinition.GetFullSpriteSheet(character)
-                //          .Save($"Chars\\{i} Full.png", ImageFormat.Png);
+                drawEngine.GetFullSpriteSheet(character)
+                          .Save($"Chars\\{i} Full.png", ImageFormat.Png);
 
                 Console.Write("#");
 
-                var text = new List<string>();
-                text.Add($"Gender: {character.Gender}");
+                var text = new List<string>
+                {
+                    $"Gender: {character.Gender}"
+                };
                 text.AddRange(character.Layers.Select(l => $"{l.SpriteLayer} : {l.DisplayName} [{l.Gender}]"));
                 File.WriteAllLines($"Chars\\{i} Dump.txt", text);
             }

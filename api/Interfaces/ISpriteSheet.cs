@@ -11,11 +11,6 @@ namespace Universal.LPC.Spritesheet.Character.Generator.Interfaces
         Gender Gender { get; set; }
 
         string DisplayName { get; set; }
-
-        string[] Tags { get; }
-
-        Image GetImage();
-        bool Matches(string[] blacklist, string[] whitelist);
     }
 
    

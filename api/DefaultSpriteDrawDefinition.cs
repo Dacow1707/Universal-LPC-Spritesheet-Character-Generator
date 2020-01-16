@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpriteResources;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,10 +9,16 @@ namespace Universal.LPC.Spritesheet.Character.Generator
 {
     public class DefaultSpriteDrawDefinition : ISpriteDrawDefinition
     {
+        public DefaultSpriteDrawDefinition(IResourceManager resourceManager)
+        {
+            ResourceManager = resourceManager;
+        }
+
         public int SheetWidth { get; set; } = 832;
         public int SheetHeight { get; set; } = 1344;
         public int SpriteWidth { get; set; } = 64;
         public int SpriteHeight { get; set; } = 64;
+        public IResourceManager ResourceManager { get; set; }
 
         public Dictionary<string, (int row, int frames)> SpriteSheetAnimationDefinition = new Dictionary<string, (int row, int frames)>()
         {
@@ -81,12 +88,11 @@ namespace Universal.LPC.Spritesheet.Character.Generator
 
                     foreach (var layer in GetOrderedLayers(sprite.Layers))
                     {
-                        using (var image = layer.GetImage())
+                        using (var image = ResourceManager.GetImage(layer.FileName))
                         {
                             if (image != null)
                             {
                                 g.DrawImage(image, srcRectange, rectangle, GraphicsUnit.Pixel);
-
                             }
                         }
                     }
@@ -103,8 +109,6 @@ namespace Universal.LPC.Spritesheet.Character.Generator
                 throw ex;
             }
         }
-
-      
 
         public List<ISpriteSheet> GetOrderedLayers(List<ISpriteSheet> layers)
         {

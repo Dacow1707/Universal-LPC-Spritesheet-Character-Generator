@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="CharacterSprite.cs" />
     <Compile Include="DefaultSpriteDrawDefinition.cs" />
-    <Compile Include="DrawEngine.cs" />
     <Compile Include="GeneratorConstants.cs" />
     <Compile Include="Interfaces\ICharacterSprite.cs" />
     <Compile Include="Interfaces\ISpriteDrawDefinition.cs" />
@@ -54,6 +53,12 @@
     <Compile Include="RandomHelper.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="SpriteSheet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpriteResources.csproj">
+      <Project>{7cef59f9-2508-4073-833d-a196fd108e9b}</Project>
+      <Name>SpriteResources</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
