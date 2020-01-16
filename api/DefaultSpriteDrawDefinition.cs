@@ -13,28 +13,6 @@ namespace Universal.LPC.Spritesheet.Character.Generator
         public int SpriteWidth { get; set; } = 64;
         public int SpriteHeight { get; set; } = 64;
 
-        public List<string> LayerOrder = new List<string>()
-        {
-            "behind_body",
-            "body",
-            "head",
-            "arms",
-            "legs",
-
-            "facial",
-            "torso",
-            "belt",
-            "feet",
-            "hands",
-            "oversize_xcf",
-            "shoulders",
-            "accessories",
-            "hair",
-            "weapons",
-
-            "palettes",
-        };
-
         public Dictionary<string, (int row, int frames)> SpriteSheetAnimationDefinition = new Dictionary<string, (int row, int frames)>()
         {
             { "Spellcast_Back", (0,7) },
@@ -103,9 +81,13 @@ namespace Universal.LPC.Spritesheet.Character.Generator
 
                     foreach (var layer in GetOrderedLayers(sprite.Layers))
                     {
-                        using (var image = layer.Image)
+                        using (var image = layer.GetImage())
                         {
-                            g.DrawImage(image, srcRectange, rectangle, GraphicsUnit.Pixel);
+                            if (image != null)
+                            {
+                                g.DrawImage(image, srcRectange, rectangle, GraphicsUnit.Pixel);
+
+                            }
                         }
                     }
 
@@ -122,14 +104,11 @@ namespace Universal.LPC.Spritesheet.Character.Generator
             }
         }
 
-        public int GetOrder(string path)
-        {
-            return LayerOrder.IndexOf(path.Split(new[] { '/', '\\' })[0].ToLower());
-        }
+      
 
         public List<ISpriteSheet> GetOrderedLayers(List<ISpriteSheet> layers)
         {
-            return layers.OrderBy(l => GetOrder(l.Category)).ToList();
+            return layers.OrderBy(l => (int)l.SpriteLayer).ToList();
         }
     }
 }

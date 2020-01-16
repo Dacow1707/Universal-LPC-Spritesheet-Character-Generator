@@ -2,66 +2,153 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Universal.LPC.Spritesheet.Character.Generator.Interfaces;
 
 namespace Universal.LPC.Spritesheet.Character.Generator
 {
     public static class CharacterSpriteGenerator
     {
-        public static string SheetRoot
+        private static List<ISpriteSheet> _spriteLibrary;
+
+        public static List<ISpriteSheet> SpriteLibrary
         {
             get
             {
-                return Path.Combine(Environment.CurrentDirectory, @"..\..\..\spritesheets");
+                if (_spriteLibrary == null)
+                {
+                    _spriteLibrary = new List<ISpriteSheet>();
+
+                    foreach (SpriteLayer layer in Enum.GetValues(typeof(SpriteLayer)))
+                    {
+                        _spriteLibrary.Add(new SpriteSheet("None", "", Gender.Either, layer));
+                    }
+
+                    _spriteLibrary.AddRange(GetSprites("body/female", SpriteLayer.Body, SearchOption.TopDirectoryOnly));
+                    //_spriteLibrary.AddRange(GetSprites("body/female/nose", SpriteLayer.Nose));
+                    _spriteLibrary.AddRange(GetSprites("body/female/eyes", SpriteLayer.Eyes));
+                    //_spriteLibrary.AddRange(GetSprites("body/female/ears", SpriteLayer.Ears));
+
+                    _spriteLibrary.AddRange(GetSprites("body/male", SpriteLayer.Body, SearchOption.TopDirectoryOnly));
+                    //_spriteLibrary.AddRange(GetSprites("body/male/nose", SpriteLayer.Nose));
+                    _spriteLibrary.AddRange(GetSprites("body/male/eyes", SpriteLayer.Eyes));
+                    //_spriteLibrary.AddRange(GetSprites("body/male/ears", SpriteLayer.Ears));
+
+                    _spriteLibrary.AddRange(GetSprites("body", SpriteLayer.Wound, SearchOption.TopDirectoryOnly, ".+blood"));
+
+                    _spriteLibrary.AddRange(GetSprites("facial", SpriteLayer.Facial));
+
+                    _spriteLibrary.AddRange(GetSprites("feet", SpriteLayer.Shoes));
+
+                    _spriteLibrary.AddRange(GetSprites("legs/pants", SpriteLayer.Legs));
+                    _spriteLibrary.AddRange(GetSprites("legs/skirt", SpriteLayer.Legs));
+
+                    _spriteLibrary.AddRange(GetSprites("feet", SpriteLayer.Boots));
+
+                    _spriteLibrary.AddRange(GetSprites("torso", SpriteLayer.Clothes, SearchOption.AllDirectories, "^((?!plate|mail).)*$"));
+
+                    _spriteLibrary.AddRange(GetSprites("torso/chain", SpriteLayer.Mail));
+                    _spriteLibrary.AddRange(GetSprites("torso/chain/tabard", SpriteLayer.Jacket));
+
+                    _spriteLibrary.AddRange(GetSprites("arms", SpriteLayer.Arms));
+
+                    _spriteLibrary.AddRange(GetSprites("shoulders", SpriteLayer.Shoulders));
+
+                    _spriteLibrary.AddRange(GetSprites("hands/bracers", SpriteLayer.Bracers));
+
+                    _spriteLibrary.AddRange(GetSprites("legs/armor", SpriteLayer.Greaves));
+
+                    _spriteLibrary.AddRange(GetSprites("hands/gloves", SpriteLayer.Gloves));
+
+                    _spriteLibrary.AddRange(GetSprites("belt", SpriteLayer.Belts));
+                    _spriteLibrary.AddRange(GetSprites("belt", SpriteLayer.Buckles, SearchOption.AllDirectories, "buckles.*"));
+
+                    _spriteLibrary.AddRange(GetSprites("accessories", SpriteLayer.Necklaces));
+
+                    _spriteLibrary.AddRange(GetSprites("hands/bracelets", SpriteLayer.Bracelet));
+
+                    _spriteLibrary.AddRange(GetSprites("behind_body/cape", SpriteLayer.Cape));
+
+                    _spriteLibrary.AddRange(GetSprites("accessories/ties", SpriteLayer.Neck));
+
+                    _spriteLibrary.AddRange(GetSprites("weapons/left hand", SpriteLayer.Shield, SearchOption.AllDirectories, "^((?!oversize).)*$"));
+
+                    _spriteLibrary.AddRange(GetSprites("behind_body/equipment", SpriteLayer.Quiver));
+
+                    _spriteLibrary.AddRange(GetSprites("hair/female", SpriteLayer.Hair));
+                    _spriteLibrary.AddRange(GetSprites("hair/male", SpriteLayer.Hair));
+
+                    _spriteLibrary.AddRange(GetSprites("head", SpriteLayer.Hats));
+
+                    _spriteLibrary.AddRange(GetSprites("weapons/right hand", SpriteLayer.Weapon));
+                }
+                return _spriteLibrary;
             }
         }
 
-        private static Dictionary<string, List<ISpriteSheet>> _spriteDictionary;
-
-        public static Dictionary<string, List<ISpriteSheet>> SpriteDictionary
+        private static Gender GetGender(string fileName)
         {
-            get
+            if (fileName.ToLower().Contains("female") || fileName.ToLower().Contains("woman"))
             {
-                if (_spriteDictionary == null)
-                {
-                    _spriteDictionary = new Dictionary<string, List<ISpriteSheet>>();
-                    foreach (var categoryDirectory in Directory.EnumerateDirectories(SheetRoot))
-                    {
-                        var category = categoryDirectory.Replace(SheetRoot, string.Empty).Trim(new[] { '/', '\\' });
-                        _spriteDictionary.Add(category, new List<ISpriteSheet>());
-
-                        var categoryPath = Path.Combine(SheetRoot, category);
-                        _spriteDictionary[category].AddRange(Directory.EnumerateFiles(categoryDirectory, "*.png", SearchOption.AllDirectories)
-                                                                 .Select(file => new SpriteSheet(file.Replace(categoryPath, string.Empty).Trim('\\'), categoryPath, category)));
-                    }
-                }
-                return _spriteDictionary;
+                return Gender.Female;
             }
+            if (fileName.ToLower().Contains("male") || fileName.ToLower().Contains("man"))
+            {
+                return Gender.Male;
+            }
+
+            return Gender.Either;
         }
 
-        public static ICharacterSprite GetRandomCharacterSprite(params string[] exclusions)
+        private static List<ISpriteSheet> GetSprites(string path, SpriteLayer layer, SearchOption option = SearchOption.AllDirectories, string filterRegex = ".*")
         {
-            var character = new CharacterSprite();
+            var root = Path.Combine(GeneratorConstants.SheetRoot, path);
+            var sheets = new List<ISpriteSheet>();
 
-            foreach (var category in SpriteDictionary.Keys)
+            var files = Directory.EnumerateFiles(root, GeneratorConstants.ImageExtension, option);
+            foreach (var file in files)
             {
-                // if category is not 'body' we have a 33% of just skipping to add some variety
-                if (category != "body" && RandomHelper.Random.Next(100) < 33)
-                {
-                    continue;
-                }
-                if (SpriteDictionary[category].Count > 0)
-                {
-                    var options = SpriteDictionary[category].Where(c => !c.Tags.Any(t => exclusions.Contains(t, StringComparer.OrdinalIgnoreCase))).ToList();
+                var name = Path.GetFileNameWithoutExtension(file);
 
-                    if (options.Count > 0)
-                    {
-                        character.AddLayer(options[RandomHelper.Random.Next(0, options.Count)]);
-                    }
+                if (FilterValid(name, filterRegex))
+                {
+                    sheets.Add(new SpriteSheet(name, file, GetGender(file), layer));
+                }
+            }
+
+            return sheets;
+        }
+
+        public static bool FilterValid(string file, string filter)
+        {
+            return Regex.IsMatch(file, filter);
+        }
+
+        public static ICharacterSprite GetRandomCharacterSprite(string[] blacklist, string[] whitelist)
+        {
+            var character = new CharacterSprite(RandomHelper.Random.Next(10) > 5 ? Gender.Male : Gender.Female);
+
+            foreach (SpriteLayer layer in Enum.GetValues(typeof(SpriteLayer)))
+            {
+                if (layer != SpriteLayer.Body && RandomHelper.Random.Next(100) < 25)
+                {
+                    continue; // skip layer
+                }
+                var sprites = GetSprites(layer, character.Gender)
+                                        .Where(s => s.Matches(blacklist, whitelist))  // filter the list based on the tags
+                                        .ToList();
+                if (sprites.Count > 0)
+                {
+                    character.AddLayer(sprites[RandomHelper.Random.Next(0, sprites.Count)]);
                 }
             }
 
             return character;
+        }
+
+        public static IEnumerable<ISpriteSheet> GetSprites(SpriteLayer layer, Gender gender)
+        {
+            return SpriteLibrary.Where(s => s.SpriteLayer == layer && (s.Gender == gender || s.Gender == Gender.Either));
         }
     }
 }

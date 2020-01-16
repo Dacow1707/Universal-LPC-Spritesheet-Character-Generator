@@ -4,14 +4,19 @@ namespace Universal.LPC.Spritesheet.Character.Generator.Interfaces
 {
     public interface ISpriteSheet
     {
-        string Category { get; set; }
-
-        string[] Tags { get; set; }
+        SpriteLayer SpriteLayer { get; set; }
 
         string FileName { get; set; }
 
+        Gender Gender { get; set; }
+
         string DisplayName { get; set; }
 
-        Image Image { get;}
+        string[] Tags { get; }
+
+        Image GetImage();
+        bool Matches(string[] blacklist, string[] whitelist);
     }
+
+   
 }

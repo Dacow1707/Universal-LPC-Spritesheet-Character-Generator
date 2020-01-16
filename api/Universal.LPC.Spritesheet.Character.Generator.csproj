@@ -45,12 +45,14 @@
     <Compile Include="CharacterSprite.cs" />
     <Compile Include="DefaultSpriteDrawDefinition.cs" />
     <Compile Include="DrawEngine.cs" />
+    <Compile Include="GeneratorConstants.cs" />
     <Compile Include="Interfaces\ICharacterSprite.cs" />
     <Compile Include="Interfaces\ISpriteDrawDefinition.cs" />
     <Compile Include="Interfaces\ISpriteSheet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CharacterSpriteGenerator.cs" />
     <Compile Include="RandomHelper.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="SpriteSheet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
