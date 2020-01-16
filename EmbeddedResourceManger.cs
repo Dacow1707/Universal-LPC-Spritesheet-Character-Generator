@@ -5,11 +5,25 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace SpriteResources
+namespace LPC.Spritesheet.ResourceManager
 {
     public class EmbeddedResourceManager : IResourceManager
     {
+        public const string Prefix = "SpriteResources.spritesheets.";
+        private string[] _resourceStrings;
         private Assembly _thisAssembly;
+
+        public string[] ResourceStrings
+        {
+            get
+            {
+                if (_resourceStrings == null)
+                {
+                    _resourceStrings = ThisAssembly.GetManifestResourceNames();
+                }
+                return _resourceStrings;
+            }
+        }
 
         public Assembly ThisAssembly
         {
@@ -53,22 +67,6 @@ namespace SpriteResources
             }
 
             return resources;
-        }
-
-        public const string Prefix = "SpriteResources.spritesheets.";
-
-        private string[] _resourceStrings;
-
-        public string[] ResourceStrings
-        {
-            get
-            {
-                if (_resourceStrings == null)
-                {
-                    _resourceStrings = ThisAssembly.GetManifestResourceNames();
-                }
-                return _resourceStrings;
-            }
         }
     }
 }

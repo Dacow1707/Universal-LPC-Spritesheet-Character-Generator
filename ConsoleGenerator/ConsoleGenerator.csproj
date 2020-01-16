@@ -51,13 +51,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\api\Universal.LPC.Spritesheet.Character.Generator.csproj">
+    <ProjectReference Include="..\api\LPC.Spritesheet.Generator.csproj">
       <Project>{500a066e-fba7-4fa1-aeb8-5bc1e1b5476c}</Project>
-      <Name>Universal.LPC.Spritesheet.Character.Generator</Name>
+      <Name>LPC.Spritesheet.Generator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SpriteResources.csproj">
-      <Project>{7CEF59F9-2508-4073-833D-A196FD108E9B}</Project>
-      <Name>SpriteResources</Name>
+    <ProjectReference Include="..\LPC.Spritesheet.ResourceManager.csproj">
+      <Project>{7cef59f9-2508-4073-833d-a196fd108e9b}</Project>
+      <Name>LPC.Spritesheet.ResourceManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

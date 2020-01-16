@@ -1,8 +1,8 @@
-﻿using SpriteResources;
+﻿using LPC.Spritesheet.ResourceManager;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Universal.LPC.Spritesheet.Character.Generator.Interfaces
+namespace LPC.Spritesheet.Generator.Interfaces
 {
     public interface ISpriteDrawDefinition
     {

@@ -2,23 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 
-namespace SpriteResources
+namespace LPC.Spritesheet.ResourceManager
 {
     public class FolderResourceManager : IResourceManager
     {
-        public Image GetImage(string path)
-        {
-            return Image.FromFile(path);
-        }
-
-        public IEnumerable<string> GetSprites(string path, SearchOption option)
-        {
-            return Directory.EnumerateFiles(Path.Combine(SheetRoot, path), ImageExtension, option);
-        }
-
-      
+        public const string ImageExtension = "*.png";
 
         private static string _sheetRoot;
 
@@ -34,8 +23,14 @@ namespace SpriteResources
             }
         }
 
-        public const string ImageExtension = "*.png";
-    }
+        public Image GetImage(string path)
+        {
+            return Image.FromFile(path);
+        }
 
-    
+        public IEnumerable<string> GetSprites(string path, SearchOption option)
+        {
+            return Directory.EnumerateFiles(Path.Combine(SheetRoot, path), ImageExtension, option);
+        }
+    }
 }

@@ -1,12 +1,12 @@
-﻿using SpriteResources;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Universal.LPC.Spritesheet.Character.Generator.Interfaces;
+using LPC.Spritesheet.Generator.Interfaces;
+using LPC.Spritesheet.ResourceManager;
 
-namespace Universal.LPC.Spritesheet.Character.Generator
+namespace LPC.Spritesheet.Generator
 {
     public class CharacterSpriteGenerator
     {

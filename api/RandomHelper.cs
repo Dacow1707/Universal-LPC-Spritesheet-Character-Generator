@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Universal.LPC.Spritesheet.Character.Generator
+namespace LPC.Spritesheet.Generator
 {
     public static class RandomHelper
     {

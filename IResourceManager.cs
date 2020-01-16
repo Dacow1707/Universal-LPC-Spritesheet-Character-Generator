@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.IO;
 
-namespace SpriteResources
+namespace LPC.Spritesheet.ResourceManager
 {
     public interface IResourceManager
     {

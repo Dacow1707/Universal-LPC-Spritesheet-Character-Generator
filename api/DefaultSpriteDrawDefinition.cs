@@ -1,11 +1,11 @@
-﻿using SpriteResources;
+﻿using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Universal.LPC.Spritesheet.Character.Generator.Interfaces;
+using LPC.Spritesheet.Generator.Interfaces;
 
-namespace Universal.LPC.Spritesheet.Character.Generator
+namespace LPC.Spritesheet.Generator
 {
     public class DefaultSpriteDrawDefinition : ISpriteDrawDefinition
     {

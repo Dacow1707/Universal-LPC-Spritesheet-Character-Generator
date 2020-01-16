@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using Universal.LPC.Spritesheet.Character.Generator.Interfaces;
+using LPC.Spritesheet.Generator.Interfaces;
 
-namespace Universal.LPC.Spritesheet.Character.Generator
+namespace LPC.Spritesheet.Generator
 {
     public class SpriteSheet : ISpriteSheet
     {

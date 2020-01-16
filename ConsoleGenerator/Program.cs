@@ -1,11 +1,11 @@
-﻿using SpriteResources;
+﻿using LPC.Spritesheet.Generator;
+using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using Universal.LPC.Spritesheet.Character.Generator;
 
 namespace ConsoleGenerator
 {

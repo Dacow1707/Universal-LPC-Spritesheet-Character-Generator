@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Universal.LPC.Spritesheet.Character.Generator.Interfaces;
+using LPC.Spritesheet.Generator.Interfaces;
 
-namespace Universal.LPC.Spritesheet.Character.Generator
+namespace LPC.Spritesheet.Generator
 {
     public class CharacterSprite : ICharacterSprite
     {

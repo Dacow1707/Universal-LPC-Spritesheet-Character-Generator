@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Universal.LPC.Spritesheet.Character.Generator.Interfaces
+namespace LPC.Spritesheet.Generator.Interfaces
 {
     public interface ISpriteSheet
     {

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universal.LPC.Spritesheet.Character.Generator", "Universal.LPC.Spritesheet.Character.Generator.csproj", "{500A066E-FBA7-4FA1-AEB8-5BC1E1B5476C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPC.Spritesheet.Generator", "LPC.Spritesheet.Generator.csproj", "{500A066E-FBA7-4FA1-AEB8-5BC1E1B5476C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleGenerator", "..\ConsoleGenerator\ConsoleGenerator.csproj", "{0404F303-99B2-4FBA-A82C-396C8E795592}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteResources", "..\SpriteResources.csproj", "{7CEF59F9-2508-4073-833D-A196FD108E9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPC.Spritesheet.ResourceManager", "..\LPC.Spritesheet.ResourceManager.csproj", "{7CEF59F9-2508-4073-833D-A196FD108E9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
