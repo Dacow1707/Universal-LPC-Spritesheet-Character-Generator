@@ -3,6 +3,7 @@ using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -13,26 +14,33 @@ namespace ConsoleGenerator
     {
         private static void Main(string[] args)
         {
-            Directory.CreateDirectory("Chars");
+            var output = "Chars";
+            if (Directory.Exists(output))
+            {
+                Directory.Delete(output, true);
+            }
+            Directory.CreateDirectory(output);
+
             var sw = new Stopwatch();
             sw.Start();
-
             // var resourceManager = new FolderResourceManager();
             var resourceManager = new EmbeddedResourceManager();
             var generator = new CharacterSpriteGenerator(resourceManager);
-            var drawEngine = new DefaultSpriteDrawDefinition(resourceManager);
-            for (int i = 0; i < 100; i++)
+            var renderer = new DefaultSpriteRenderer(resourceManager);
+            var count = 100;
+
+            var images = new List<Image>();
+            for (int i = 0; i < count; i++)
             {
                 var character = generator.GetRandomCharacterSprite();
+                var single = renderer.GetSingleSprite(character, Animation.Walk, Orientation.Front, 1);
+                images.Add(single);
 
-                drawEngine.GetSingleSprite(character, Animation.Walk, Orientation.Front, 1)
-                          .Save($"Chars\\{i}.png", ImageFormat.Png);
-
-                drawEngine.GetFullSpriteSheet(character)
-                          .Save($"Chars\\{i} Full.png", ImageFormat.Png);
+                single.Save($"Chars\\{i}.png", ImageFormat.Png);
+                renderer.GetFullSpriteSheet(character)
+                        .Save($"Chars\\{i} Full.png", ImageFormat.Png);
 
                 Console.Write("#");
-
                 var text = new List<string>
                 {
                     $"Gender: {character.Gender}"
@@ -41,11 +49,42 @@ namespace ConsoleGenerator
                 File.WriteAllLines($"Chars\\{i} Dump.txt", text);
             }
 
+            MergeImages(images, (int)Math.Sqrt(count)).Save($"Chars\\Merged.png", ImageFormat.Png);
             sw.Stop();
 
             Console.WriteLine();
-            Console.WriteLine($"Done in {sw.Elapsed}");
+            Console.WriteLine($"Generated {count} sprites in {sw.Elapsed}");
             Console.ReadKey();
+        }
+
+        private static Bitmap MergeImages(IEnumerable<Image> images, int columns)
+        {
+            const int spriteSize = 64;
+            var enumerable = images.ToList();
+
+            var width = columns * spriteSize;
+            var height = (enumerable.Count / columns) * spriteSize;
+
+            var bitmap = new Bitmap(width, height);
+            using (var g = Graphics.FromImage(bitmap))
+            {
+                var localWidth = 0;
+                var y = 0;
+                foreach (var image in enumerable)
+                {
+                    if (localWidth >= width)
+                    {
+                        localWidth = 0;
+                        y++;
+                    }
+
+                    g.DrawImage(image, localWidth, y * spriteSize);
+                    localWidth += image.Width;
+
+                    
+                }
+            }
+            return bitmap;
         }
     }
 }

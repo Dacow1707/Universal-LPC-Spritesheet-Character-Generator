@@ -7,9 +7,9 @@ using LPC.Spritesheet.Generator.Interfaces;
 
 namespace LPC.Spritesheet.Generator
 {
-    public class DefaultSpriteDrawDefinition : ISpriteDrawDefinition
+    public class DefaultSpriteRenderer : ISpriteDrawDefinition
     {
-        public DefaultSpriteDrawDefinition(IResourceManager resourceManager)
+        public DefaultSpriteRenderer(IResourceManager resourceManager)
         {
             ResourceManager = resourceManager;
         }

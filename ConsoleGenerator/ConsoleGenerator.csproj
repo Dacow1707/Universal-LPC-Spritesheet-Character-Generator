@@ -51,7 +51,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\api\LPC.Spritesheet.Generator.csproj">
+    <ProjectReference Include="..\LPC.Spritesheet.Generator\LPC.Spritesheet.Generator.csproj">
       <Project>{500a066e-fba7-4fa1-aeb8-5bc1e1b5476c}</Project>
       <Name>LPC.Spritesheet.Generator</Name>
     </ProjectReference>

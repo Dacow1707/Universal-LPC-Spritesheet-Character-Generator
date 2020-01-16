@@ -9,7 +9,7 @@ namespace LPC.Spritesheet.ResourceManager
 {
     public class EmbeddedResourceManager : IResourceManager
     {
-        public const string Prefix = "SpriteResources.spritesheets.";
+        public const string Prefix = "LPC.Spritesheet.ResourceManager.spritesheets.";
         private string[] _resourceStrings;
         private Assembly _thisAssembly;
 
