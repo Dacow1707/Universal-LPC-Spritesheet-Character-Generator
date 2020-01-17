@@ -18,13 +18,13 @@ namespace LPC.Spritesheet.Generator
 
         public Image GetPartialSpriteSheet(ICharacterSprite sprite, Animation animation, Orientation orientation)
         {
-            var (row, _) = RendererConstants.SpriteSheetAnimationDefinition[$"{animation}_{orientation}"];
+            var (row, _) = RendererConstants.SpriteSheetAnimationDefinition[(animation,orientation)];
             return GetSpriteSheet(sprite, new Rectangle(0, row * RendererConstants.SpriteWidth, RendererConstants.SheetWidth, RendererConstants.SpriteHeight));
         }
 
         public Image GetSingleSprite(ICharacterSprite sprite, Animation animation, Orientation orientation, int frame)
         {
-            var (row, frames) = RendererConstants.SpriteSheetAnimationDefinition[$"{animation}_{orientation}"];
+            var (row, frames) = RendererConstants.SpriteSheetAnimationDefinition[(animation, orientation)];
 
             if (frame >= frames)
             {

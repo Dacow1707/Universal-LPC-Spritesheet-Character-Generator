@@ -39,13 +39,13 @@ namespace LPC.Spritesheet.Renderer
 
         public Texture2D GetPartialSpriteSheet(ICharacterSprite sprite, Interfaces.Animation animation, Orientation orientation)
         {
-            var (row, _) = RendererConstants.SpriteSheetAnimationDefinition[$"{animation}_{orientation}"];
+            var (row, _) = RendererConstants.SpriteSheetAnimationDefinition[(animation, orientation)];
             return GetSpriteSheet(sprite, new RectInt(0, row * RendererConstants.SpriteWidth, RendererConstants.SheetWidth, RendererConstants.SpriteHeight));
         }
 
         public Texture2D GetSingleSprite(ICharacterSprite sprite, Interfaces.Animation animation, Orientation orientation, int frame)
         {
-            var (row, frames) = RendererConstants.SpriteSheetAnimationDefinition[$"{animation}_{orientation}"];
+            var (row, frames) = RendererConstants.SpriteSheetAnimationDefinition[(animation, orientation)];
 
             if (frame >= frames)
             {
