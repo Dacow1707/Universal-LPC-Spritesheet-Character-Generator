@@ -26,7 +26,7 @@ namespace LPC.Spritesheet.Generator
             { (Animation.Slash, Orientation.Right), (15,6) },
             { (Animation.Shoot, Orientation.Back), (16,13) },
             { (Animation.Shoot, Orientation.Left), (17,13) },
-            { (Animation.Shoot, Orientation.Front), (18,1) },
+            { (Animation.Shoot, Orientation.Front), (18,13) },
             { (Animation.Shoot, Orientation.Right), (19,13) },
             { (Animation.Die, Orientation.Back), (20,6) },
             { (Animation.Die, Orientation.Left), (20,6) },
