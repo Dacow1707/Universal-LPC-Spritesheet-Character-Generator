@@ -6,7 +6,7 @@ namespace LPC.Spritesheet.Generator
 {
     public static class RendererConstants
     {
-        public static Dictionary<(Animation, Orientation), (int row, int frames)> SpriteSheetAnimationDefinition = new Dictionary<(Animation, Orientation), (int row, int frames)>()
+        public static Dictionary<(Animation animation, Orientation orientation), (int row, int frames)> SpriteSheetAnimationDefinition = new Dictionary<(Animation, Orientation), (int row, int frames)>()
         {
             { (Animation.Spellcast, Orientation.Back), (0,7) },
             { (Animation.Spellcast, Orientation.Left), (1,7) },
