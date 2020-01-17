@@ -1,23 +1,21 @@
-﻿using System;
+﻿using LPC.Spritesheet.Interfaces;
+using LPC.Spritesheet.ResourceManager;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using LPC.Spritesheet.Generator.Interfaces;
-using LPC.Spritesheet.ResourceManager;
 
 namespace LPC.Spritesheet.Generator
 {
     public class CharacterSpriteGenerator
     {
-
         public IResourceManager ResourceManager { get; set; }
 
         public CharacterSpriteGenerator(IResourceManager resoureManager)
         {
             ResourceManager = resoureManager;
         }
-
 
         private List<ISpriteSheet> _spriteLibrary;
 
@@ -29,10 +27,11 @@ namespace LPC.Spritesheet.Generator
                 {
                     _spriteLibrary = new List<ISpriteSheet>();
 
-                    foreach (SpriteLayer layer in Enum.GetValues(typeof(SpriteLayer)))
-                    {
-                        _spriteLibrary.Add(new SpriteSheet("None", "", Gender.Either, layer));
-                    }
+                    // todo: revisit this later to add a 'blank' option to each
+                    //foreach (SpriteLayer layer in Enum.GetValues(typeof(SpriteLayer)))
+                    //{
+                    //    _spriteLibrary.Add(new SpriteSheet("None", "", Gender.Either, layer));
+                    //}
 
                     _spriteLibrary.AddRange(GetSprites("body/female", SpriteLayer.Body, SearchOption.TopDirectoryOnly));
                     //_spriteLibrary.AddRange(GetSprites("body/female/nose", SpriteLayer.Nose));

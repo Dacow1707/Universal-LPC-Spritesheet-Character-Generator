@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SpriteResources")]
+[assembly: AssemblyTitle("LPC.Spritesheet.Interfaces")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SpriteResources")]
+[assembly: AssemblyProduct("LPC.Spritesheet.Interfaces")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7cef59f9-2508-4073-833d-a196fd108e9b")]
+[assembly: Guid("752b2568-09d6-458d-84c7-57664be55cb9")]
 
 // Version information for an assembly consists of the following four values:
 //

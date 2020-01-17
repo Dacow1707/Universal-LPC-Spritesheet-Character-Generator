@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using LPC.Spritesheet.Generator.Interfaces;
+using LPC.Spritesheet.Interfaces;
 
 namespace LPC.Spritesheet.Generator
 {

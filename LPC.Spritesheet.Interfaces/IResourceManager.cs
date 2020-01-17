@@ -6,7 +6,7 @@ namespace LPC.Spritesheet.ResourceManager
 {
     public interface IResourceManager
     {
-        Image GetImage(string path);
+        Stream GetImageStream(string path);
 
         IEnumerable<string> GetSprites(string path, SearchOption option);
     }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LPC.Spritesheet.Generator.Interfaces
+namespace LPC.Spritesheet.Interfaces
 {
     public interface ICharacterSprite
     {

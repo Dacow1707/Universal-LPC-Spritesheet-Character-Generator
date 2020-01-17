@@ -22,10 +22,19 @@ namespace LPC.Spritesheet.ResourceManager
                 return _sheetRoot;
             }
         }
-
-        public Image GetImage(string path)
+              
+        public Stream GetImageStream(string path)
         {
-            return Image.FromFile(path);
+            var ms = new MemoryStream();
+
+            using (var file = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                byte[] bytes = new byte[file.Length];
+                file.Read(bytes, 0, (int)file.Length);
+                ms.Write(bytes, 0, (int)file.Length);
+            }
+
+            return ms;
         }
 
         public IEnumerable<string> GetSprites(string path, SearchOption option)

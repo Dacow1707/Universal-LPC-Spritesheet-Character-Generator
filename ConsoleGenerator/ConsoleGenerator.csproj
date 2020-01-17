@@ -55,6 +55,14 @@
       <Project>{500a066e-fba7-4fa1-aeb8-5bc1e1b5476c}</Project>
       <Name>LPC.Spritesheet.Generator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LPC.Spritesheet.Interfaces\LPC.Spritesheet.Interfaces.csproj">
+      <Project>{752B2568-09D6-458D-84C7-57664BE55CB9}</Project>
+      <Name>LPC.Spritesheet.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LPC.Spritesheet.Renderer\LPC.Spritesheet.Renderer.csproj">
+      <Project>{5ec5d250-19ee-43d9-a6de-79b52397a8d2}</Project>
+      <Name>LPC.Spritesheet.Renderer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LPC.Spritesheet.ResourceManager.csproj">
       <Project>{7cef59f9-2508-4073-833d-a196fd108e9b}</Project>
       <Name>LPC.Spritesheet.ResourceManager</Name>

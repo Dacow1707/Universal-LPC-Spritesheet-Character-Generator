@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleGenerator", "..\Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPC.Spritesheet.ResourceManager", "..\LPC.Spritesheet.ResourceManager.csproj", "{7CEF59F9-2508-4073-833D-A196FD108E9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPC.Spritesheet.Renderer", "..\LPC.Spritesheet.Renderer\LPC.Spritesheet.Renderer.csproj", "{5EC5D250-19EE-43D9-A6DE-79B52397A8D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPC.Spritesheet.Interfaces", "..\LPC.Spritesheet.Interfaces\LPC.Spritesheet.Interfaces.csproj", "{752B2568-09D6-458D-84C7-57664BE55CB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{7CEF59F9-2508-4073-833D-A196FD108E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CEF59F9-2508-4073-833D-A196FD108E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CEF59F9-2508-4073-833D-A196FD108E9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EC5D250-19EE-43D9-A6DE-79B52397A8D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EC5D250-19EE-43D9-A6DE-79B52397A8D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EC5D250-19EE-43D9-A6DE-79B52397A8D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EC5D250-19EE-43D9-A6DE-79B52397A8D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{752B2568-09D6-458D-84C7-57664BE55CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{752B2568-09D6-458D-84C7-57664BE55CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{752B2568-09D6-458D-84C7-57664BE55CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{752B2568-09D6-458D-84C7-57664BE55CB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

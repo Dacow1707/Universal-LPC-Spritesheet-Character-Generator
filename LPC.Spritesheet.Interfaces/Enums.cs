@@ -1,4 +1,4 @@
-﻿namespace LPC.Spritesheet.Generator
+﻿namespace LPC.Spritesheet.Interfaces
 {
     public enum SpriteLayer
     {

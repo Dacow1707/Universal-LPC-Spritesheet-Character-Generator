@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace LPC.Spritesheet.Generator.Interfaces
+namespace LPC.Spritesheet.Interfaces
 {
     public interface ISpriteSheet
     {
@@ -13,5 +13,5 @@ namespace LPC.Spritesheet.Generator.Interfaces
         string DisplayName { get; set; }
     }
 
-   
+
 }

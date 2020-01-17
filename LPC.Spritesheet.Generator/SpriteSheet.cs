@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using LPC.Spritesheet.Generator.Interfaces;
+using LPC.Spritesheet.Interfaces;
 
 namespace LPC.Spritesheet.Generator
 {

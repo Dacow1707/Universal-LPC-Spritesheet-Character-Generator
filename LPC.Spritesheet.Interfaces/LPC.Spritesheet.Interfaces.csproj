@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7CEF59F9-2508-4073-833D-A196FD108E9B}</ProjectGuid>
+    <ProjectGuid>{752B2568-09D6-458D-84C7-57664BE55CB9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LPC.Spritesheet.ResourceManager</RootNamespace>
-    <AssemblyName>LPC.Spritesheet.ResourceManager</AssemblyName>
+    <RootNamespace>LPC.Spritesheet.Interfaces</RootNamespace>
+    <AssemblyName>LPC.Spritesheet.Interfaces</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,7 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,35 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FolderResourceManager.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="ICharacterSprite.cs" />
+    <Compile Include="IResourceManager.cs" />
+    <Compile Include="ISpriteSheet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EmbeddedResourceManger.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="spritesheets\**\*.*" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="spritesheets\oversize_xcf\slash_swords.xcf" />
-    <None Include="spritesheets\oversize_xcf\thrust_spears.xcf" />
-    <None Include="spritesheets\palettes\hair.xcf" />
-    <None Include="spritesheets\palettes\skin.xcf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AUTHORS.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="cc-by-sa-3_0.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="gpl-3_0.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="LPC.Spritesheet.Interfaces\LPC.Spritesheet.Interfaces.csproj">
-      <Project>{752b2568-09d6-458d-84c7-57664be55cb9}</Project>
-      <Name>LPC.Spritesheet.Interfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

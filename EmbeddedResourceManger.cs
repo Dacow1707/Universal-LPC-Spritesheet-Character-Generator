@@ -38,16 +38,9 @@ namespace LPC.Spritesheet.ResourceManager
             }
         }
 
-        public Image GetImage(string path)
+        public Stream GetImageStream(string path)
         {
-            try
-            {
-                return Image.FromStream(ThisAssembly.GetManifestResourceStream(path));
-            }
-            catch
-            {
-                return null;
-            }
+            return ThisAssembly.GetManifestResourceStream(path);
         }
 
         public IEnumerable<string> GetSprites(string path, SearchOption option)

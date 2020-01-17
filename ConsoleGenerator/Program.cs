@@ -1,4 +1,5 @@
 ﻿using LPC.Spritesheet.Generator;
+using LPC.Spritesheet.Interfaces;
 using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace ConsoleGenerator
             // var resourceManager = new FolderResourceManager();
             var resourceManager = new EmbeddedResourceManager();
             var generator = new CharacterSpriteGenerator(resourceManager);
-            var renderer = new DefaultSpriteRenderer(resourceManager);
+            var renderer = new DotNetImageRenderer(resourceManager);
             var count = 100;
 
             var images = new List<Image>();
