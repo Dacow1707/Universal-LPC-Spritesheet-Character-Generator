@@ -28,7 +28,7 @@ namespace ConsoleGenerator
             var resourceManager = new EmbeddedResourceManager();
             var generator = new CharacterSpriteGenerator(resourceManager);
             var renderer = new DotNetImageRenderer(resourceManager);
-            var count = 100;
+            var count = 1;
 
             var images = new List<Image>();
             for (int i = 0; i < count; i++)
@@ -40,14 +40,22 @@ namespace ConsoleGenerator
                 single.Save($"Chars\\{i}.png", ImageFormat.Png);
                 renderer.GetFullSpriteSheet(character)
                         .Save($"Chars\\{i} Full.png", ImageFormat.Png);
-
-                Console.Write("#");
-                var text = new List<string>
+                var counter = 0;
+                foreach (var ani in RendererConstants.SpriteSheetAnimationDefinition)
                 {
-                    $"Gender: {character.Gender}"
-                };
-                text.AddRange(character.Layers.Select(l => $"{l.SpriteLayer} : {l.DisplayName} [{l.Gender}]"));
-                File.WriteAllLines($"Chars\\{i} Dump.txt", text);
+                    renderer.GetPartialSpriteSheet(character, ani.Key.animation,ani.Key.orientation).Save($"Chars\\{counter}-{ani.Key.animation}-{ani.Key.orientation}.png");
+                    counter++;
+                }
+                //renderer.GetFullSpriteSheet(character)
+                //        .Save($"Chars\\{i} Full.png", ImageFormat.Png);
+
+                //Console.Write("#");
+                //var text = new List<string>
+                //{
+                //    $"Gender: {character.Gender}"
+                //};
+                //text.AddRange(character.Layers.Select(l => $"{l.SpriteLayer} : {l.DisplayName} [{l.Gender}]"));
+                //File.WriteAllLines($"Chars\\{i} Dump.txt", text);
             }
 
             MergeImages(images, (int)Math.Sqrt(count)).Save($"Chars\\Merged.png", ImageFormat.Png);

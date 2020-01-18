@@ -87,6 +87,7 @@ namespace LPC.Spritesheet.Renderer
                     firstLayer = false;
                 }
 
+                newImage.filterMode = FilterMode.Point;
                 newImage.Apply();
                 return newImage;
             }
