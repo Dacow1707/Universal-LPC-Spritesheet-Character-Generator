@@ -1,5 +1,6 @@
 ﻿using LPC.Spritesheet.Generator;
 using LPC.Spritesheet.Interfaces;
+using LPC.Spritesheet.Renderer;
 using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace ConsoleGenerator
             // var resourceManager = new FolderResourceManager();
             var resourceManager = new EmbeddedResourceManager();
             var generator = new CharacterSpriteGenerator(resourceManager);
-            var renderer = new DotNetImageRenderer(resourceManager);
+            var renderer = new UnityTexture2dRenderer(resourceManager);
             var count = 1;
 
             var images = new List<Image>();
@@ -35,17 +36,16 @@ namespace ConsoleGenerator
             {
                 var character = generator.GetRandomCharacterSprite();
                 var single = renderer.GetSingleSprite(character, Animation.Walk, Orientation.Front, 1);
-                images.Add(single);
 
-                single.Save($"Chars\\{i}.png", ImageFormat.Png);
-                renderer.GetFullSpriteSheet(character)
-                        .Save($"Chars\\{i} Full.png", ImageFormat.Png);
-                var counter = 0;
-                foreach (var ani in RendererConstants.SpriteSheetAnimationDefinition)
-                {
-                    renderer.GetPartialSpriteSheet(character, ani.Key.animation,ani.Key.orientation).Save($"Chars\\{counter}-{ani.Key.animation}-{ani.Key.orientation}.png");
-                    counter++;
-                }
+                //single.Save($"Chars\\{i}.png", ImageFormat.Png);
+                //renderer.GetFullSpriteSheet(character)
+                //        .Save($"Chars\\{i} Full.png", ImageFormat.Png);
+                //var counter = 0;
+                //foreach (var ani in RendererConstants.SpriteSheetAnimationDefinition)
+                //{
+                //    renderer.GetPartialSpriteSheet(character, ani.Key.animation,ani.Key.orientation).Save($"Chars\\{counter}-{ani.Key.animation}-{ani.Key.orientation}.png");
+                //    counter++;
+                //}
                 //renderer.GetFullSpriteSheet(character)
                 //        .Save($"Chars\\{i} Full.png", ImageFormat.Png);
 
@@ -58,7 +58,7 @@ namespace ConsoleGenerator
                 //File.WriteAllLines($"Chars\\{i} Dump.txt", text);
             }
 
-            MergeImages(images, (int)Math.Sqrt(count)).Save($"Chars\\Merged.png", ImageFormat.Png);
+            //MergeImages(images, (int)Math.Sqrt(count)).Save($"Chars\\Merged.png", ImageFormat.Png);
             sw.Stop();
 
             Console.WriteLine();

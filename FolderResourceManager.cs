@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 
 namespace LPC.Spritesheet.ResourceManager
@@ -22,7 +21,7 @@ namespace LPC.Spritesheet.ResourceManager
                 return _sheetRoot;
             }
         }
-              
+
         public Stream GetImageStream(string path)
         {
             var ms = new MemoryStream();

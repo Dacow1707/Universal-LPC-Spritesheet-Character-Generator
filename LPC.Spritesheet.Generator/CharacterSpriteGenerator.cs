@@ -10,14 +10,14 @@ namespace LPC.Spritesheet.Generator
 {
     public class CharacterSpriteGenerator
     {
-        public IResourceManager ResourceManager { get; set; }
+        private List<ISpriteSheet> _spriteLibrary;
 
         public CharacterSpriteGenerator(IResourceManager resoureManager)
         {
             ResourceManager = resoureManager;
         }
 
-        private List<ISpriteSheet> _spriteLibrary;
+        public IResourceManager ResourceManager { get; set; }
 
         public List<ISpriteSheet> SpriteLibrary
         {
@@ -54,7 +54,7 @@ namespace LPC.Spritesheet.Generator
 
                     _spriteLibrary.AddRange(GetSprites("feet", SpriteLayer.Boots));
 
-                    _spriteLibrary.AddRange(GetSprites("torso", SpriteLayer.Clothes, SearchOption.AllDirectories, "^((?!plate|mail).)*$"));
+                    _spriteLibrary.AddRange(GetSprites("torso", SpriteLayer.Clothes, SearchOption.AllDirectories, "^((?!plate|mail|back).)*$"));
 
                     _spriteLibrary.AddRange(GetSprites("torso/chain", SpriteLayer.Mail));
                     _spriteLibrary.AddRange(GetSprites("torso/chain/tabard", SpriteLayer.Jacket));
@@ -77,6 +77,7 @@ namespace LPC.Spritesheet.Generator
                     _spriteLibrary.AddRange(GetSprites("hands/bracelets", SpriteLayer.Bracelet));
 
                     _spriteLibrary.AddRange(GetSprites("behind_body/cape", SpriteLayer.Cape));
+                    _spriteLibrary.AddRange(GetSprites("torso/back", SpriteLayer.Cape));
 
                     _spriteLibrary.AddRange(GetSprites("accessories/ties", SpriteLayer.Neck));
 
@@ -93,39 +94,6 @@ namespace LPC.Spritesheet.Generator
                 }
                 return _spriteLibrary;
             }
-        }
-
-        private Gender GetGender(string fileName)
-        {
-            if (fileName.ToLower().Contains("female") || fileName.ToLower().Contains("woman"))
-            {
-                return Gender.Female;
-            }
-            if (fileName.ToLower().Contains("male") || fileName.ToLower().Contains("man"))
-            {
-                return Gender.Male;
-            }
-
-            return Gender.Either;
-        }
-
-        private List<ISpriteSheet> GetSprites(string path, SpriteLayer layer, SearchOption option = SearchOption.AllDirectories, string filterRegex = ".*")
-        {
-            var sheets = new List<ISpriteSheet>();
-
-            var files = ResourceManager.GetSprites(path, option);
-
-            foreach (var file in files)
-            {
-                var name = Path.GetFileNameWithoutExtension(file);
-
-                if (FilterValid(name, filterRegex))
-                {
-                    sheets.Add(new SpriteSheet(name, file, GetGender(file), layer));
-                }
-            }
-
-            return sheets;
         }
 
         public bool FilterValid(string file, string filter)
@@ -156,6 +124,39 @@ namespace LPC.Spritesheet.Generator
         public IEnumerable<ISpriteSheet> GetSprites(SpriteLayer layer, Gender gender)
         {
             return SpriteLibrary.Where(s => s.SpriteLayer == layer && (s.Gender == gender || s.Gender == Gender.Either));
+        }
+
+        private Gender GetGender(string fileName)
+        {
+            if (fileName.ToLower().Contains("female") || fileName.ToLower().Contains("woman"))
+            {
+                return Gender.Female;
+            }
+            if (fileName.ToLower().Contains("male") || fileName.ToLower().Contains("man"))
+            {
+                return Gender.Male;
+            }
+
+            return Gender.Either;
+        }
+
+        private List<ISpriteSheet> GetSprites(string path, SpriteLayer layer, SearchOption option = SearchOption.AllDirectories, string filterRegex = ".*")
+        {
+            var sheets = new List<ISpriteSheet>();
+
+            var files = ResourceManager.GetSprites(path, option);
+
+            foreach (var file in files)
+            {
+                var name = Path.GetFileNameWithoutExtension(file);
+
+                if (FilterValid(name, filterRegex))
+                {
+                    sheets.Add(new SpriteSheet(name, ResourceManager.GetImageStream(file), GetGender(file), layer));
+                }
+            }
+
+            return sheets;
         }
     }
 }

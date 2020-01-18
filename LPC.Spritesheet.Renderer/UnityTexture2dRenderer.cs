@@ -3,7 +3,6 @@ using LPC.Spritesheet.Interfaces;
 using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -17,20 +16,6 @@ namespace LPC.Spritesheet.Renderer
         }
 
         public IResourceManager ResourceManager { get; set; }
-
-        public static byte[] ReadStream(Stream input)
-        {
-            byte[] buffer = new byte[16 * 1024];
-            using (var ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
 
         public Texture2D GetFullSpriteSheet(ICharacterSprite sprite)
         {
@@ -65,7 +50,7 @@ namespace LPC.Spritesheet.Renderer
             try
             {
                 var layers = new List<Texture2D>();
-                layers.AddRange(RendererConstants.GetOrderedLayers(sprite.Layers).Select(l => GetTexture(l.FileName, rectangle)));
+                layers.AddRange(RendererConstants.GetOrderedLayers(sprite.Layers).Select(l => GetTexture(l.SpriteData, rectangle)));
 
                 // the first layer ignores the alpha rule, overriding everything
                 var firstLayer = true;
@@ -97,14 +82,11 @@ namespace LPC.Spritesheet.Renderer
             }
         }
 
-        public Texture2D GetTexture(string fileName, RectInt rectangle)
+        public Texture2D GetTexture(byte[] spriteData, RectInt rectangle)
         {
-            using (var stream = ResourceManager.GetImageStream(fileName))
-            {
-                var texture = new Texture2D(rectangle.width, rectangle.height);
-                texture.LoadImage(ReadStream(stream));
-                return texture;
-            }
+            var texture = new Texture2D(rectangle.width, rectangle.height);
+            texture.LoadImage(spriteData);
+            return texture;
         }
     }
 }

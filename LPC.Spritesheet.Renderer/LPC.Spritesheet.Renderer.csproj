@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="RenderBase.cs" />
     <Compile Include="UnityTexture2dRenderer.cs" />
-    <Compile Include="DotNetImageRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RendererConstants.cs" />
   </ItemGroup>

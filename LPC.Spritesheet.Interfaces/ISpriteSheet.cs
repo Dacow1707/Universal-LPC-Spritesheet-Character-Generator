@@ -6,11 +6,11 @@ namespace LPC.Spritesheet.Interfaces
     {
         SpriteLayer SpriteLayer { get; set; }
 
-        string FileName { get; set; }
-
         Gender Gender { get; set; }
 
         string DisplayName { get; set; }
+
+        byte[] SpriteData { get; set; }
     }
 
 
