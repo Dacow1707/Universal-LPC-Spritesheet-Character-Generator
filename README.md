@@ -80,4 +80,4 @@ The Unity integration is mostly done, I am using it in my game and will be fixin
 
 ### Examples
 
-![alt text](https://github.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/blob/master/Example.mp4)
+![alt text](https://github.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/blob/master/example.gif)
