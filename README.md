@@ -1,6 +1,8 @@
 Universal LPC Spritesheet Character Generator
 =============================================
 
+![alt text](https://raw.githubusercontent.com/EttienneS/Universal-LPC-Spritesheet-Character-Generator/master/example.gif)
+
 Based on the Universal Spritesheet generator by [sanderfrenken](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/) which in turn was based on was based on [Universal LPC Spritesheet](https://github.com/jrconway3/Universal-LPC-spritesheet).
 
 ### Run
@@ -78,7 +80,3 @@ CC-BY-SA 3.0:
 GNU GPL 3.0:
  - http://www.gnu.org/licenses/gpl-3.0.html
  - See the file: [gpl-3.0](gpl-3_0.txt)
-
-### Examples
-
-![alt text](https://raw.githubusercontent.com/EttienneS/Universal-LPC-Spritesheet-Character-Generator/master/example.gif)
