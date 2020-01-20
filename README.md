@@ -1,9 +1,7 @@
 Universal LPC Spritesheet Character Generator
 =============================================
 
-Based on [Universal LPC Spritesheet](https://github.com/jrconway3/Universal-LPC-spritesheet).
-
-Try it out [here](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/).
+Based on the Universal Spritesheet generator by [sanderfrenken](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/) which in turn was based on was based on [Universal LPC Spritesheet](https://github.com/jrconway3/Universal-LPC-spritesheet).
 
 The project you are looking now is an expansion on the above mentioned projects. I try to include all LPC created art up to now.
 
@@ -27,24 +25,59 @@ GNU GPL 3.0:
 
 ### Run
 
-To run this project, just clone the repo and open ``index.html`` in your browser of choice.
+Add the two assemblies LPC.Spritesheet.Generator.dll and LPC.Spritesheet.ResourceManager.dll to your Unity project (Tested with Unity 2019.3.0f5).
+
+Create a 2D Sprite object and attach this script:
+
+```c#
+    public class SpriteTester : MonoBehaviour
+    {
+        // the attached renderer
+        private SpriteRenderer _renderer;
+
+        // objec to hold the sheet definition
+        private CharacterSpriteSheet _characterSpriteSheet;
+
+        // keep track of the current animation frame
+        private int _frame;
+
+        // keep track of time to only update the frame every second
+        private float _delta;
+
+        private void Start()
+        {
+            // get the attached renderer
+            _renderer = GetComponent<SpriteRenderer>();
+
+            // create a generator (this loads everything in the resource manager into memory, so if you need a few of these keep this as a singleton somewhere)
+            var generator = new CharacterSpriteGenerator(new EmbeddedResourceManager());
+
+            // generate the sprite, this will go over and select random items and all 27 layers and merge them into a single texture (expensive, takes ~200ms)
+            _characterSpriteSheet = new CharacterSpriteSheet(generator.GetRandomCharacterSprite());
+        }
+
+        private void Update()
+        {
+            _delta += Time.deltaTime;
+
+            if (_delta > 1f)
+            {
+                _delta = 0;
+                // send in a refrence to the frame integer, will increment and go over the items (if it goes over it will reset to 0 to loop the animation)
+                _renderer.sprite = _characterSpriteSheet.GetFrame(Animation.Walk, Orientation.Front, ref _frame);
+            }
+        }
+    }
+```
 
 ### Caution
 
-This is not an example of a perfectly coded project, and it does have bugs.
-In my current project I am using the generator to create a vast amount of awesome different characters, and the results are beautiful.
-
-Still, feel free to enhance the code where you like, but for now, I focus on just adding content.
+Creating sprites are resource intensive and will take several frames to continue, plan accordingly or your game will hitch every time you run.
 
 ### Status
 
-Support still working on:
-
-- [Teens](https://opengameart.org/content/lpc-teen-unisex-base-clothes)
-- [Triumph](https://opengameart.org/content/lpc-major-triumph)
-- [Skorpios](https://opengameart.org/content/lpc-skorpios-scifi-sprite-pack)
+The Unity integration is mostly done, I am using it in my game and will be fixing bugs as I find them.
 
 ### Examples
-![alt text](https://github.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/blob/master/ex1.png)
-![alt text](https://github.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/blob/master/ex2.png)
-![alt text](https://github.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/blob/master/ex3.png)
+
+![alt text](https://github.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/blob/master/Example.mp4)
