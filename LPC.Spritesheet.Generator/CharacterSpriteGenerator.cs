@@ -1,4 +1,5 @@
-﻿using LPC.Spritesheet.Interfaces;
+﻿using LPC.Spritesheet.Generator.Enums;
+using LPC.Spritesheet.Generator.Interfaces;
 using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;
@@ -34,14 +35,14 @@ namespace LPC.Spritesheet.Generator
                     //}
 
                     _spriteLibrary.AddRange(GetSprites("body/female", SpriteLayer.Body, SearchOption.TopDirectoryOnly));
-                    //_spriteLibrary.AddRange(GetSprites("body/female/nose", SpriteLayer.Nose));
+                    _spriteLibrary.AddRange(GetSprites("body/female/nose", SpriteLayer.Nose));
                     _spriteLibrary.AddRange(GetSprites("body/female/eyes", SpriteLayer.Eyes));
-                    //_spriteLibrary.AddRange(GetSprites("body/female/ears", SpriteLayer.Ears));
+                    _spriteLibrary.AddRange(GetSprites("body/female/ears", SpriteLayer.Ears));
 
                     _spriteLibrary.AddRange(GetSprites("body/male", SpriteLayer.Body, SearchOption.TopDirectoryOnly));
-                    //_spriteLibrary.AddRange(GetSprites("body/male/nose", SpriteLayer.Nose));
+                    _spriteLibrary.AddRange(GetSprites("body/male/nose", SpriteLayer.Nose));
                     _spriteLibrary.AddRange(GetSprites("body/male/eyes", SpriteLayer.Eyes));
-                    //_spriteLibrary.AddRange(GetSprites("body/male/ears", SpriteLayer.Ears));
+                    _spriteLibrary.AddRange(GetSprites("body/male/ears", SpriteLayer.Ears));
 
                     _spriteLibrary.AddRange(GetSprites("body", SpriteLayer.Wound, SearchOption.TopDirectoryOnly, ".+blood"));
 
@@ -101,13 +102,13 @@ namespace LPC.Spritesheet.Generator
             return Regex.IsMatch(file, filter);
         }
 
-        public ICharacterSprite GetRandomCharacterSprite()
+        public ICharacterSpriteDefinition GetRandomCharacterSprite()
         {
-            var character = new CharacterSprite(RandomHelper.Random.Next(10) > 5 ? Gender.Male : Gender.Female);
+            var character = new CharacterSpriteDefinition(RandomHelper.Random.Next(10) > 5 ? Gender.Male : Gender.Female);
 
             foreach (SpriteLayer layer in Enum.GetValues(typeof(SpriteLayer)))
             {
-                if (layer != SpriteLayer.Body && RandomHelper.Random.Next(100) < 25)
+                if (layer != SpriteLayer.Body && RandomHelper.Random.Next(100) < 35)
                 {
                     continue; // skip layer
                 }

@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
-using LPC.Spritesheet.Interfaces;
+using LPC.Spritesheet.Generator.Enums;
+using LPC.Spritesheet.Generator.Interfaces;
 
 namespace LPC.Spritesheet.Generator
 {
-    public class CharacterSprite : ICharacterSprite
+    public class CharacterSpriteDefinition : ICharacterSpriteDefinition
     {
         public List<ISpriteSheet> Layers { get; set; }
         public Gender Gender { get; set; }
 
-        public CharacterSprite(Gender gender)
+        public CharacterSpriteDefinition(Gender gender)
         {
             Layers = new List<ISpriteSheet>();
             Gender = gender;

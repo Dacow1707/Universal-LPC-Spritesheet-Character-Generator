@@ -1,6 +1,5 @@
 ﻿using LPC.Spritesheet.Generator;
 using LPC.Spritesheet.Interfaces;
-using LPC.Spritesheet.Renderer;
 using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;

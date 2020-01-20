@@ -1,4 +1,5 @@
-﻿using LPC.Spritesheet.Interfaces;
+﻿using LPC.Spritesheet.Generator.Enums;
+using LPC.Spritesheet.Generator.Interfaces;
 using System.IO;
 
 namespace LPC.Spritesheet.Generator
