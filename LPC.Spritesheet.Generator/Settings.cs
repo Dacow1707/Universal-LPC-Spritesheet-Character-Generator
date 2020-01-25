@@ -49,5 +49,10 @@ namespace LPC.Spritesheet.Generator
         {
             return layers.OrderBy(l => (int)l.SpriteLayer).ToList();
         }
+
+        public static List<ISpriteSheet> GetOrderedLayersDescending(List<ISpriteSheet> layers)
+        {
+            return layers.OrderByDescending(l => (int)l.SpriteLayer).ToList();
+        }
     }
 }

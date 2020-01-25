@@ -42,26 +42,30 @@ namespace LPC.Spritesheet.Generator
             try
             {
                 var layers = new List<Texture2D>();
-                layers.AddRange(Settings.GetOrderedLayers(sprite.Layers).Select(l => GetTexture(l.SpriteData, rectangle)));
+                layers.AddRange(Settings.GetOrderedLayersDescending(sprite.Layers).Select(l => GetTexture(l.SpriteData, rectangle)));
 
-                // the first layer ignores the alpha rule, overriding everything
-                var firstLayer = true;
-
-                foreach (var layer in layers)
+                for (int x = 0; x < rectangle.width; x++)
                 {
-                    for (int x = 0; x < rectangle.width; x++)
+                    for (int y = 0; y < rectangle.height; y++)
                     {
-                        for (int y = 0; y < rectangle.height; y++)
+                        var firstLayer = true;
+                        foreach (var layer in layers)
                         {
-                            var pixel = layer.GetPixel(rectangle.x + x, rectangle.y + y);
-
-                            if (pixel.a == 1 || firstLayer)
+                            var newPixel = layer.GetPixel(rectangle.x + x, rectangle.y + y);
+                            if (newPixel.a == 1)
                             {
-                                newImage.SetPixel(x, y, pixel);
+                                newImage.SetPixel(x, y, newPixel);
+                                break;
                             }
+                            else if (firstLayer)
+                            {
+                                // the first layer ignores the alpha rule, overriding everything
+                                newImage.SetPixel(x, y, newPixel);
+                            }
+
+                            firstLayer = false;
                         }
                     }
-                    firstLayer = false;
                 }
 
                 newImage.filterMode = FilterMode.Point;
