@@ -1,5 +1,4 @@
 ﻿using LPC.Spritesheet.Generator;
-using LPC.Spritesheet.Interfaces;
 using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;
@@ -24,40 +23,19 @@ namespace ConsoleGenerator
 
             var sw = new Stopwatch();
             sw.Start();
-            // var resourceManager = new FolderResourceManager();
-            var resourceManager = new EmbeddedResourceManager();
-            var generator = new CharacterSpriteGenerator(resourceManager);
-            var renderer = new UnityTexture2dRenderer(resourceManager);
-            var count = 1;
+            var generator = new CharacterSpriteGenerator(new EmbeddedResourceManager());
+            var count = 15;
 
             var images = new List<Image>();
             for (int i = 0; i < count; i++)
             {
+                Console.Write("<");
                 var character = generator.GetRandomCharacterSprite();
-                var single = renderer.GetSingleSprite(character, Animation.Walk, Orientation.Front, 1);
-
-                //single.Save($"Chars\\{i}.png", ImageFormat.Png);
-                //renderer.GetFullSpriteSheet(character)
-                //        .Save($"Chars\\{i} Full.png", ImageFormat.Png);
-                //var counter = 0;
-                //foreach (var ani in RendererConstants.SpriteSheetAnimationDefinition)
-                //{
-                //    renderer.GetPartialSpriteSheet(character, ani.Key.animation,ani.Key.orientation).Save($"Chars\\{counter}-{ani.Key.animation}-{ani.Key.orientation}.png");
-                //    counter++;
-                //}
-                //renderer.GetFullSpriteSheet(character)
-                //        .Save($"Chars\\{i} Full.png", ImageFormat.Png);
-
-                //Console.Write("#");
-                //var text = new List<string>
-                //{
-                //    $"Gender: {character.Gender}"
-                //};
-                //text.AddRange(character.Layers.Select(l => $"{l.SpriteLayer} : {l.DisplayName} [{l.Gender}]"));
-                //File.WriteAllLines($"Chars\\{i} Dump.txt", text);
+                var image = ImageRenderer.GetFullSpriteSheet(character);
+                image.Save($"Chars\\{i}.png", ImageFormat.Png);
+                Console.Write(">");
             }
 
-            //MergeImages(images, (int)Math.Sqrt(count)).Save($"Chars\\Merged.png", ImageFormat.Png);
             sw.Stop();
 
             Console.WriteLine();
@@ -88,8 +66,6 @@ namespace ConsoleGenerator
 
                     g.DrawImage(image, localWidth, y * spriteSize);
                     localWidth += image.Width;
-
-                    
                 }
             }
             return bitmap;

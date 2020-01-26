@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,7 @@
     <Compile Include="Enums\Gender.cs" />
     <Compile Include="Enums\Orientation.cs" />
     <Compile Include="Enums\SpriteLayer.cs" />
+    <Compile Include="ImageRenderer.cs" />
     <Compile Include="Intefaces\ICharacterSprite.cs" />
     <Compile Include="Intefaces\ISpriteSheet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
