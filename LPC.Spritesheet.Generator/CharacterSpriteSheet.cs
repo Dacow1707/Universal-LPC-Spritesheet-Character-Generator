@@ -14,7 +14,7 @@ namespace LPC.Spritesheet.Generator
 
         public CharacterSpriteSheet(ICharacterSpriteDefinition characterSprite)
         {
-            Texture = TextureRenderer.GetFullSheetTexture(characterSprite);
+            Texture = HybridRenderer.GetFullSheetTexture(characterSprite);
 
             foreach (var renderConstant in Settings.SpriteSheetAnimationDefinition)
             {

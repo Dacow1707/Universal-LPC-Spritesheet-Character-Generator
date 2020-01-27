@@ -63,6 +63,7 @@
     <Compile Include="RandomHelper.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SpriteSheet.cs" />
+    <Compile Include="HybridRenderer.cs" />
     <Compile Include="TextureRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
