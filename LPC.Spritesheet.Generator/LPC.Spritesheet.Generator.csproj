@@ -49,8 +49,11 @@
     <Compile Include="CharacterSpriteDefinition.cs" />
     <Compile Include="CharacterSpriteSheet.cs" />
     <Compile Include="Enums\Animation.cs" />
+    <Compile Include="Enums\ArmorType.cs" />
     <Compile Include="Enums\Gender.cs" />
+    <Compile Include="Enums\Hand.cs" />
     <Compile Include="Enums\Orientation.cs" />
+    <Compile Include="Enums\Race.cs" />
     <Compile Include="Enums\SpriteLayer.cs" />
     <Compile Include="ImageRenderer.cs" />
     <Compile Include="Intefaces\ICharacterSprite.cs" />

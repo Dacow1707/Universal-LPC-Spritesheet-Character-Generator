@@ -1,4 +1,6 @@
 ﻿using LPC.Spritesheet.Generator;
+using LPC.Spritesheet.Generator.Enums;
+using LPC.Spritesheet.Generator.Interfaces;
 using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;
@@ -15,25 +17,37 @@ namespace ConsoleGenerator
         private static void Main(string[] args)
         {
             var output = "Chars";
-            if (Directory.Exists(output))
-            {
-                Directory.Delete(output, true);
-            }
+            //if (Directory.Exists(output))
+            //{
+            //    Directory.Delete(output, true);
+            //}
             Directory.CreateDirectory(output);
 
             var sw = new Stopwatch();
             sw.Start();
             var generator = new CharacterSpriteGenerator(new EmbeddedResourceManager());
-            var count = 15;
+            var count = 27;
 
             var images = new List<Image>();
             for (int i = 0; i < count; i++)
             {
                 Console.Write("<");
-                var character = generator.GetRandomCharacterSprite();
-                var image = ImageRenderer.GetFullSpriteSheet(character);
+
+                var character = generator.GetRandomCharacterSprite(Race.Elf);
+                var image = ImageRenderer.GetSingleSprite(character, Animation.Walk, Orientation.Front, 2);
                 image.Save($"Chars\\{i}.png", ImageFormat.Png);
+
+                var imageF = ImageRenderer.GetFullSpriteSheet(character);
+                imageF.Save($"Chars\\{i}F.png", ImageFormat.Png);
                 Console.Write(">");
+
+                var text = new List<string>
+                {
+                    $"Gender: {character.Gender}",
+                    $"Race: {character.Race}",
+                };
+                text.AddRange(character.Layers.Select(l => $"{l.SpriteLayer} : {l.DisplayName} [{l.Gender}]"));
+                File.WriteAllLines($"Chars\\{i} Dump.txt", text);
             }
 
             sw.Stop();

@@ -6,19 +6,23 @@ namespace LPC.Spritesheet.Generator
 {
     public class SpriteSheet : ISpriteSheet
     {
-        public SpriteLayer SpriteLayer { get; set; }
-        public string DisplayName { get; set; }
-
-        public Gender Gender { get; set; }
-        public byte[] SpriteData { get; set; }
-
-        public SpriteSheet(string displayName, Stream stream, Gender gender, SpriteLayer layer)
+        public SpriteSheet(string displayName, string fileName, Stream stream, Gender gender, Race race, SpriteLayer layer)
         {
             DisplayName = displayName;
             Gender = gender;
             SpriteLayer = layer;
             SpriteData = ReadStream(stream);
+            Race = race;
+
+            Tags = fileName.Split(new[] { '\\', '-', '_', '.', ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
         }
+
+        public string DisplayName { get; set; }
+        public Gender Gender { get; set; }
+        public Race Race { get; set; }
+        public byte[] SpriteData { get; set; }
+        public string[] Tags { get; set; }
+        public SpriteLayer SpriteLayer { get; set; }
 
         public static byte[] ReadStream(Stream input)
         {
@@ -32,6 +36,11 @@ namespace LPC.Spritesheet.Generator
                 }
                 return ms.ToArray();
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{DisplayName} - {SpriteLayer} - {Race} - {Gender}";
         }
     }
 }

@@ -44,7 +44,7 @@ namespace LPC.Spritesheet.ResourceManager
 
         public IEnumerable<string> GetSprites(string path, SearchOption option)
         {
-            var fullPath = Prefix + path.Replace("\\", ".").Replace("/", ".");
+            var fullPath = Prefix + path.Replace("\\", ".").Replace("/", ".").Replace(" ", "_");
 
             var resources = ResourceStrings.Where(r => r.StartsWith(fullPath, StringComparison.OrdinalIgnoreCase));
 

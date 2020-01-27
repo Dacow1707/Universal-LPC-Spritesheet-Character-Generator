@@ -54,5 +54,10 @@ namespace LPC.Spritesheet.Generator
         {
             return layers.OrderByDescending(l => (int)l.SpriteLayer).ToList();
         }
+
+        public static string[] ToneConstants = new[]
+        {
+            "dark", "dark2", "light", "black", "brown", "olive", "peach", "white", "tanned", "tanned2"
+        };
     }
 }
