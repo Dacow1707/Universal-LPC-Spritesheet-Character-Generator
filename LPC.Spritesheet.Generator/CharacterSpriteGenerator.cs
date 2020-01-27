@@ -110,6 +110,11 @@ namespace LPC.Spritesheet.Generator
             AddClothesLayer(character, SpriteLayer.Belts);
             AddClothesLayer(character, SpriteLayer.Buckles);
             AddClothesLayer(character, SpriteLayer.Clothes);
+
+            if (RandomHelper.Random.Next(0,100) > 80)
+            {
+                AddClothesLayer(character, SpriteLayer.Hats);
+            }
         }
 
         private void AddClothesLayer(ICharacterSpriteDefinition character, SpriteLayer layer)
@@ -144,6 +149,7 @@ namespace LPC.Spritesheet.Generator
             AddArmorLayer(character, SpriteLayer.Greaves, armorType);
             AddArmorLayer(character, SpriteLayer.Shoulders, armorType);
             AddArmorLayer(character, SpriteLayer.Clothes, armorType);
+            AddArmorLayer(character, SpriteLayer.Hats, armorType);
         }
 
         public void AddWeapons(ICharacterSpriteDefinition character)
@@ -227,7 +233,12 @@ namespace LPC.Spritesheet.Generator
 
             var hairTone = "";
             var noHair = false;
-            if (race == Race.Orc && RandomHelper.Random.Next(0, 100) > 20)
+
+            if (race == Race.Skeleton)
+            {
+                noHair = true;
+            }
+            else if (race == Race.Orc && RandomHelper.Random.Next(0, 100) > 20)
             {
                 noHair = true;
             }
@@ -304,7 +315,20 @@ namespace LPC.Spritesheet.Generator
             var character = GetBaseCharacter(RandomHelper.Random.Next(10) > 5 ? Gender.Male : Gender.Female, race);
 
             AddClothes(character);
-            AddArmor(character, ArmorType.plate);
+
+            var rand = RandomHelper.Random.Next(0, 100);
+            if (rand > 66)
+            {
+                AddArmor(character, ArmorType.plate);
+            }
+            else if (rand > 33)
+            {
+                AddArmor(character, ArmorType.leather);
+            }
+            else
+            {
+                AddArmor(character, ArmorType.chain);
+            }
 
             AddWeapons(character);
 
