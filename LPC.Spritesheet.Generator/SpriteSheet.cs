@@ -13,7 +13,7 @@ namespace LPC.Spritesheet.Generator
             SpriteLayer = layer;
             SpriteData = ReadStream(stream);
             Race = race;
-
+            FullName = fileName;
             Tags = fileName.Split(new[] { '\\', '-', '_', '.', ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
         }
 
@@ -23,6 +23,7 @@ namespace LPC.Spritesheet.Generator
         public byte[] SpriteData { get; set; }
         public string[] Tags { get; set; }
         public SpriteLayer SpriteLayer { get; set; }
+        public string FullName { get; set; }
 
         public static byte[] ReadStream(Stream input)
         {
