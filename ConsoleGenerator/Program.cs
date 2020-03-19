@@ -1,11 +1,8 @@
 ﻿using LPC.Spritesheet.Generator;
 using LPC.Spritesheet.Generator.Enums;
-using LPC.Spritesheet.Generator.Interfaces;
 using LPC.Spritesheet.ResourceManager;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -16,73 +13,52 @@ namespace ConsoleGenerator
     {
         private static void Main(string[] args)
         {
-            var output = "Chars";
-            //if (Directory.Exists(output))
-            //{
-            //    Directory.Delete(output, true);
-            //}
-            Directory.CreateDirectory(output);
-
-            var sw = new Stopwatch();
-            sw.Start();
-            var generator = new CharacterSpriteGenerator(new EmbeddedResourceManager());
-            var count = 27;
-
-            var images = new List<Image>();
-            for (int i = 0; i < count; i++)
+            var genders = new List<Gender> { Gender.Male, Gender.Female };
+            foreach (var gender in genders)
             {
-                Console.Write("<");
+                Console.WriteLine(gender);
 
-                var character = generator.GetRandomCharacterSprite(Race.Elf);
-                var image = ImageRenderer.GetSingleSprite(character, Animation.Walk, Orientation.Front, 2);
-                image.Save($"Chars\\{i}.png", ImageFormat.Png);
-
-                var imageF = ImageRenderer.GetFullSpriteSheet(character);
-                imageF.Save($"Chars\\{i}F.png", ImageFormat.Png);
-                Console.Write(">");
-
-                var text = new List<string>
+                var output = $"Out\\Clothes\\{gender}";
+                if (Directory.Exists(output))
                 {
-                    $"Gender: {character.Gender}",
-                    $"Race: {character.Race}",
-                };
-                text.AddRange(character.Layers.Select(l => $"{l.SpriteLayer} : {l.DisplayName} [{l.Gender}]"));
-                File.WriteAllLines($"Chars\\{i} Dump.txt", text);
-            }
+                    Directory.Delete(output, true);
+                }
+                Directory.CreateDirectory(output);
 
-            sw.Stop();
+                var generator = new CharacterSpriteGenerator(new EmbeddedResourceManager());
+                var count = 25;
 
-            Console.WriteLine();
-            Console.WriteLine($"Generated {count} sprites in {sw.Elapsed}");
-            Console.ReadKey();
-        }
-
-        private static Bitmap MergeImages(IEnumerable<Image> images, int columns)
-        {
-            const int spriteSize = 64;
-            var enumerable = images.ToList();
-
-            var width = columns * spriteSize;
-            var height = (enumerable.Count / columns) * spriteSize;
-
-            var bitmap = new Bitmap(width, height);
-            using (var g = Graphics.FromImage(bitmap))
-            {
-                var localWidth = 0;
-                var y = 0;
-                foreach (var image in enumerable)
+                for (int i = 0; i < count; i++)
                 {
-                    if (localWidth >= width)
+                    Console.Write(i);
+
+                    var character = new CharacterSpriteDefinition(gender, Race.Any);
+                    AddLayer(SpriteLayer.Clothes, gender, generator, character);
+                    AddLayer(SpriteLayer.Legs, gender, generator, character);
+                    AddLayer(SpriteLayer.Shoes, gender, generator, character);
+
+                    if (RandomHelper.Random.Next(10) > 7)
                     {
-                        localWidth = 0;
-                        y++;
+                        AddLayer(SpriteLayer.Belts, gender, generator, character);
                     }
 
-                    g.DrawImage(image, localWidth, y * spriteSize);
-                    localWidth += image.Width;
+                    if (RandomHelper.Random.Next(10) > 9)
+                    {
+                        AddLayer(SpriteLayer.Cape, gender, generator, character);
+                    }
+
+                    var imageF = ImageRenderer.GetFullSpriteSheet(character);
+                    imageF.Save($"{output}\\{i}.png", ImageFormat.Png);
+
+                    Console.WriteLine("- Done");
                 }
             }
-            return bitmap;
+        }
+
+        private static void AddLayer(SpriteLayer layer, Gender gender, CharacterSpriteGenerator generator, CharacterSpriteDefinition character)
+        {
+            var sprites = generator.GetSprites(layer, Race.Any, gender).ToList();
+            character.AddLayer(sprites[RandomHelper.Random.Next(0, sprites.Count)]);
         }
     }
 }

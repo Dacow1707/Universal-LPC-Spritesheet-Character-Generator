@@ -274,7 +274,12 @@ namespace LPC.Spritesheet.Generator
 
             if (gender == Gender.Male)
             {
-                if (RandomHelper.Random.Next(0, 10) > 3)
+                var rand = RandomHelper.Random.Next(0, 10);
+                if (race == Race.Elf)
+                {
+                    rand -= 3;
+                }
+                if (rand > 5)
                 {
                     var facialHairSprites = GetSprites(SpriteLayer.Facial, Race.Any, Gender.Male)
                             .Where(t => t.Tags.Contains("male") && !t.Tags.Contains("Mask")).ToList();
